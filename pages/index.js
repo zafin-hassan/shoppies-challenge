@@ -1,8 +1,13 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import Hero from "../components/Hero"
+import MovieList from "../components/MovieList";
+import Search from "../components/Search";
+import * as React from "react";
 
 export default function Home() {
+  const [searchResult, setSearchResult] = React.useState("");
+  // const [isLoading, setIsLoading] = React.useState(true);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,7 +16,8 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <Hero />
+        <Search setSearchResult={setSearchResult} />
+        <MovieList searchResult={searchResult} />
       </main>
 
       <footer className={styles.footer}>

@@ -3,15 +3,17 @@ import { SearchIcon } from "@chakra-ui/icons";
 import * as React from "react";
 import axios from "axios";
 
-const SearchBar = () => {
+const SearchBar = (props) => {
   const [value, setValue] = React.useState("");
   const handleChange = (event) => setValue(event.target.value);
 
+  const { setSearchResult} = props;
+
   const fetchMovieData = () => {
     axios
-      .get(`http://www.omdbapi.com/?t=dark+knight&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`)
+      .get(`http://www.omdbapi.com/?s=${value}&type=movie&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`)
       .then((res) => {
-        console.log(res);
+        setSearchResult(res.data);
       });
   };
 
