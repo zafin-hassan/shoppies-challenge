@@ -19,7 +19,7 @@ import ModalComponent from "./ModalComponent";
 import { MovieContext } from "./../context/MovieContext";
 
 const MovieCard = (props) => {
-  const { artist, modalDataLoading, setModalDataLoading } = props;
+  const { movie, modalDataLoading, setModalDataLoading } = props;
   const { cardState, dispatch } = useContext(MovieContext);
   const {
     nomineeCount,
@@ -28,10 +28,10 @@ const MovieCard = (props) => {
     isNomineeLimitReached,
   } = cardState;
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const fetchMovieData = (artist) => {
+  const fetchMovieData = (movie) => {
     axios
       .get(
-        `http://www.omdbapi.com/?i=${artist.imdbID}&plot=full&type=movie&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`
+        `http://www.omdbapi.com/?i=${movie.imdbID}&plot=full&type=movie&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`
       )
       .then((res) => {
         setCurrentMovie(res.data);
@@ -44,27 +44,27 @@ const MovieCard = (props) => {
   const isEqual = (first, second) => {
     return first.imdbID === second.imdbID;
   };
-  const isDuplicate = (artist) =>
-    nominatedMovies.some((nom) => isEqual(nom, artist));
+  const isDuplicate = (movie) =>
+    nominatedMovies.some((nom) => isEqual(nom, movie));
 
-  const handleNominate = (artist) => {
-    if (!isDuplicate(artist)) {
-      dispatch({ type: "nominate", payload: artist });
+  const handleNominate = (movie) => {
+    if (!isDuplicate(movie)) {
+      dispatch({ type: "nominate", payload: movie });
     }
-    console.log(artist);
+    console.log(movie);
   };
-  const handleRemove = (artist) => {
-    dispatch({ type: "remove", payload: artist });
+  const handleRemove = (movie) => {
+    dispatch({ type: "remove", payload: movie });
   };
 
   const showMoreInfo = (props) => {
-    fetchMovieData(artist);
-    console.log(artist);
+    fetchMovieData(movie);
+    console.log(movie);
     onOpen();
   };
 
-  const getButtonLabel = (artist) => {
-    return isDuplicate(artist) ? "Nominated" : "Nominate";
+  const getButtonLabel = (movie) => {
+    return isDuplicate(movie) ? "Nominated" : "Nominate";
   };
   return (
     <Tbody>
@@ -74,14 +74,14 @@ const MovieCard = (props) => {
           <Image
             className=""
             maxW="120px"
-            src={artist?.Poster}
-            alt={artist?.Title}
+            src={movie?.Poster}
+            alt={movie?.Title}
           />
         </Td>
         <Td>
           <VStack align="self-start">
-            <Text>{artist?.Title}</Text>
-            <Text fontSize="sm">{artist?.Year}</Text>
+            <Text>{movie?.Title}</Text>
+            <Text fontSize="sm">{movie?.Year}</Text>
           </VStack>
         </Td>
         <Td>
@@ -94,19 +94,17 @@ const MovieCard = (props) => {
               handleNominate={handleNominate}
             />
           )}
-          {isNomineeLimitReached || isDuplicate(artist) ? (
-            <Button isDisabled onClick={() => handleNominate(artist)}>
-              {getButtonLabel(artist)}
+          {isNomineeLimitReached || isDuplicate(movie) ? (
+            <Button isDisabled onClick={() => handleNominate(movie)}>
+              {getButtonLabel(movie)}
             </Button>
           ) : (
-            <Button onClick={() => handleNominate(artist)}>
-              {getButtonLabel(artist)}
+            <Button onClick={() => handleNominate(movie)}>
+              {getButtonLabel(movie)}
             </Button>
           )}
-          <Button onClick={() => handleRemove(artist)}>Remove</Button>
-          <Button onClick={() => showMoreInfo(artist, onOpen)}>
-            More Info
-          </Button>
+          <Button onClick={() => handleRemove(movie)}>Remove</Button>
+          <Button onClick={() => showMoreInfo(movie, onOpen)}>More Info</Button>
         </Td>
       </Tr>
     </Tbody>

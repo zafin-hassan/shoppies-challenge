@@ -22,8 +22,8 @@ const MovieList = (props) => {
     <div>
       {searchResult && !isLoading && (
         <Table variant="simple" className="dataTable">
-          {searchResult?.Search?.map((artist, i) => (
-            <MovieCard key={i} artist={artist} />
+          {searchResult?.Search?.map((movie, i) => (
+            <MovieCard key={i} movie={movie} />
           ))}
         </Table>
       )}

@@ -2,7 +2,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import MovieList from "../components/MovieList";
 import Search from "../components/Search";
-import { useState, useReducer, useContext } from "react";
+import { useState, useReducer } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Nominations from "../components/Nominations";
 import { MovieContext } from "./../context/MovieContext";
@@ -13,7 +13,6 @@ export default function Home() {
   const [searchResult, setSearchResult] = useState("");
   const [modalDataLoading, setModalDataLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const { nominatedMovies, currentMovie } = cardState;
   return (
     <div className={styles.container}>
       <Head>
@@ -38,10 +37,7 @@ export default function Home() {
                 <MovieList searchResult={searchResult} />
               </TabPanel>
               <TabPanel>
-                <Nominations
-                  nominatedMovies={nominatedMovies}
-                  currentMovie={currentMovie}
-                />
+                <Nominations />
               </TabPanel>
             </TabPanels>
           </MovieContext.Provider>
