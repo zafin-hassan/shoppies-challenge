@@ -14,21 +14,19 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import ModalComponent from "./ModalComponent";
+import { MovieContext } from "./../context/MovieContext";
 
 const MovieCard = (props) => {
+  const { artist, modalDataLoading, setModalDataLoading } = props;
+  const { cardState, dispatch } = useContext(MovieContext);
   const {
-    artist,
+    nomineeCount,
     nominatedMovies,
-    setNominatedMovies,
-    isLoading,
-    setIsLoading,
     currentMovie,
-    setCurrentMovie,
-    modalDataLoading,
-    setModalDataLoading,
-  } = props;
+    isNomineeLimitReached,
+  } = cardState;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const fetchMovieData = (artist) => {
     axios
@@ -51,23 +49,18 @@ const MovieCard = (props) => {
 
   const handleNominate = (artist) => {
     if (!isDuplicate(artist)) {
-      setNominatedMovies((nominatedMovies) => [...nominatedMovies, artist]);
+      dispatch({ type: "nominate", payload: artist });
     }
     console.log(artist);
   };
   const handleRemove = (artist) => {
-    setNominatedMovies(
-      nominatedMovies.filter((item) => item.imdbID !== artist.imdbID)
-    );
-    console.log(artist.imdbID);
+    dispatch({ type: "remove", payload: artist });
   };
+
   const showMoreInfo = (props) => {
     fetchMovieData(artist);
     console.log(artist);
     onOpen();
-  };
-  const handleNominateClick = (artist) => {
-    setSelectedNominee(artist);
   };
 
   const getButtonLabel = (artist) => {
@@ -101,9 +94,15 @@ const MovieCard = (props) => {
               handleNominate={handleNominate}
             />
           )}
-          <Button onClick={() => handleNominate(artist)}>
-            {getButtonLabel(artist)}
-          </Button>
+          {isNomineeLimitReached || isDuplicate(artist) ? (
+            <Button isDisabled onClick={() => handleNominate(artist)}>
+              {getButtonLabel(artist)}
+            </Button>
+          ) : (
+            <Button onClick={() => handleNominate(artist)}>
+              {getButtonLabel(artist)}
+            </Button>
+          )}
           <Button onClick={() => handleRemove(artist)}>Remove</Button>
           <Button onClick={() => showMoreInfo(artist, onOpen)}>
             More Info

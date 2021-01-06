@@ -2,17 +2,18 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import MovieList from "../components/MovieList";
 import Search from "../components/Search";
-import { useState } from "react";
+import { useState, useReducer, useContext } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Nominations from "../components/Nominations";
+import { MovieContext } from "./../context/MovieContext";
+import { cardReducer, initialState } from "./../reducers/index";
 
 export default function Home() {
+  const [cardState, dispatch] = useReducer(cardReducer, initialState);
   const [searchResult, setSearchResult] = useState("");
-  const [nominatedMovies, setNominatedMovies] = useState([]);
   const [modalDataLoading, setModalDataLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentMovie, setCurrentMovie] = useState();
-
+  const { nominatedMovies, currentMovie } = cardState;
   return (
     <div className={styles.container}>
       <Head>
@@ -31,29 +32,19 @@ export default function Home() {
             <Tab>Search Results</Tab>
             <Tab>Nominations</Tab>
           </TabList>
-          <TabPanels>
-            <TabPanel>
-              <MovieList
-                searchResult={searchResult}
-                nominatedMovies={nominatedMovies}
-                setNominatedMovies={setNominatedMovies}
-                modalDataLoading={modalDataLoading}
-                setModalDataLoading={setModalDataLoading}
-                currentMovie={currentMovie}
-                setCurrentMovie={setCurrentMovie}
-              />
-            </TabPanel>
-            <TabPanel>
-              <Nominations
-                nominatedMovies={nominatedMovies}
-                setNominatedMovies={setNominatedMovies}
-                modalDataLoading={modalDataLoading}
-                setModalDataLoading={setModalDataLoading}
-                currentMovie={currentMovie}
-                setCurrentMovie={setCurrentMovie}
-              />
-            </TabPanel>
-          </TabPanels>
+          <MovieContext.Provider value={{ dispatch, cardState }}>
+            <TabPanels>
+              <TabPanel>
+                <MovieList searchResult={searchResult} />
+              </TabPanel>
+              <TabPanel>
+                <Nominations
+                  nominatedMovies={nominatedMovies}
+                  currentMovie={currentMovie}
+                />
+              </TabPanel>
+            </TabPanels>
+          </MovieContext.Provider>
         </Tabs>
       </main>
 
