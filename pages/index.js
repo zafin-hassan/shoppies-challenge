@@ -2,11 +2,16 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import MovieList from "../components/MovieList";
 import Search from "../components/Search";
-import * as React from "react";
+import { useState } from "react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import Nominations from "../components/Nominations";
 
 export default function Home() {
-  const [searchResult, setSearchResult] = React.useState("");
-  // const [isLoading, setIsLoading] = React.useState(true);
+  const [searchResult, setSearchResult] = useState("");
+  const [nominatedMovies, setNominatedMovies] = useState([]);
+  const [modalDataLoading, setModalDataLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentMovie, setCurrentMovie] = useState();
 
   return (
     <div className={styles.container}>
@@ -16,11 +21,43 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <Search setSearchResult={setSearchResult} />
-        <MovieList searchResult={searchResult} />
+        <Search
+          className="search-bar"
+          setSearchResult={setSearchResult}
+          setIsLoading={setIsLoading}
+        />
+        <Tabs>
+          <TabList>
+            <Tab>Search Results</Tab>
+            <Tab>Nominations</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <MovieList
+                searchResult={searchResult}
+                nominatedMovies={nominatedMovies}
+                setNominatedMovies={setNominatedMovies}
+                modalDataLoading={modalDataLoading}
+                setModalDataLoading={setModalDataLoading}
+                currentMovie={currentMovie}
+                setCurrentMovie={setCurrentMovie}
+              />
+            </TabPanel>
+            <TabPanel>
+              <Nominations
+                nominatedMovies={nominatedMovies}
+                setNominatedMovies={setNominatedMovies}
+                modalDataLoading={modalDataLoading}
+                setModalDataLoading={setModalDataLoading}
+                currentMovie={currentMovie}
+                setCurrentMovie={setCurrentMovie}
+              />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </main>
 
-      <footer className={styles.footer}>
+      {/* <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
@@ -29,7 +66,7 @@ export default function Home() {
           Powered by{" "}
           <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
         </a>
-      </footer>
+      </footer> */}
     </div>
   );
 }
