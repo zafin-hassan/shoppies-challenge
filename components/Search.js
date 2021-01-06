@@ -25,7 +25,7 @@ const SearchBar = (props) => {
   }, [value]);
 
   return (
-    <InputGroup>
+    <InputGroup className="md:max-w-max">
       <InputLeftElement
         pointerEvents="none"
         children={<SearchIcon color="gray.300" />}

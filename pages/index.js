@@ -3,7 +3,15 @@ import styles from "../styles/Home.module.css";
 import MovieList from "../components/MovieList";
 import Search from "../components/Search";
 import { useState, useReducer } from "react";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Heading,
+  VStack,
+} from "@chakra-ui/react";
 import Nominations from "../components/Nominations";
 import { MovieContext } from "./../context/MovieContext";
 import { cardReducer, initialState } from "./../reducers/index";
@@ -14,23 +22,27 @@ export default function Home() {
   const [modalDataLoading, setModalDataLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <VStack>
+        <Heading>Shoppies</Heading>
         <Search
           className="search-bar"
           setSearchResult={setSearchResult}
           setIsLoading={setIsLoading}
         />
-        <Tabs>
+        <Tabs variant="soft-rounded" colorScheme="green">
           <TabList>
             <Tab>Search Results</Tab>
             <Tab>Nominations</Tab>
           </TabList>
+          {cardState.isNomineeLimitReached && (
+            <div>Thanks for selecting 5 nominations!</div>
+          )}
           <MovieContext.Provider value={{ dispatch, cardState }}>
             <TabPanels>
               <TabPanel>
@@ -42,7 +54,7 @@ export default function Home() {
             </TabPanels>
           </MovieContext.Provider>
         </Tabs>
-      </main>
+      </VStack>
 
       {/* <footer className={styles.footer}>
         <a

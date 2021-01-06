@@ -15,11 +15,16 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext } from "react";
-import ModalComponent from "./ModalComponent";
+// import ModalComponent from "./ModalComponent";
 import { MovieContext } from "./../context/MovieContext";
 
 const MovieCard = (props) => {
-  const { movie, modalDataLoading, setModalDataLoading } = props;
+  const {
+    movie,
+    modalDataLoading,
+    nominationsTab: nominationsTab,
+    setModalDataLoading,
+  } = props;
   const { cardState, dispatch } = useContext(MovieContext);
   const {
     nomineeCount,
@@ -67,25 +72,24 @@ const MovieCard = (props) => {
     return isDuplicate(movie) ? "Nominated" : "Nominate";
   };
   return (
-    <Tbody>
-      <Tr>
-        <Td>
-          {" "}
-          <Image
-            className=""
-            maxW="120px"
-            src={movie?.Poster}
-            alt={movie?.Title}
-          />
-        </Td>
-        <Td>
-          <VStack align="self-start">
-            <Text>{movie?.Title}</Text>
-            <Text fontSize="sm">{movie?.Year}</Text>
-          </VStack>
-        </Td>
-        <Td>
-          {!modalDataLoading && (
+    <Tr>
+      <Td>
+        {" "}
+        <Image
+          className=""
+          maxW="120px"
+          src={movie?.Poster}
+          alt={movie?.Title}
+        />
+      </Td>
+      <Td>
+        <VStack align="self-start">
+          <Text>{movie?.Title}</Text>
+          <Text fontSize="sm">{movie?.Year}</Text>
+        </VStack>
+      </Td>
+      <Td>
+        {/* {!modalDataLoading && (
             <ModalComponent
               onClose={onClose}
               isOpen={isOpen}
@@ -93,21 +97,28 @@ const MovieCard = (props) => {
               modalDataLoading={modalDataLoading}
               handleNominate={handleNominate}
             />
+          )} */}
+        <VStack>
+          {!nominationsTab && (
+            <div>
+              {isNomineeLimitReached || isDuplicate(movie) ? (
+                <Button isDisabled onClick={() => handleNominate(movie)}>
+                  {getButtonLabel(movie)}
+                </Button>
+              ) : (
+                <Button onClick={() => handleNominate(movie)}>
+                  {getButtonLabel(movie)}
+                </Button>
+              )}
+            </div>
           )}
-          {isNomineeLimitReached || isDuplicate(movie) ? (
-            <Button isDisabled onClick={() => handleNominate(movie)}>
-              {getButtonLabel(movie)}
-            </Button>
-          ) : (
-            <Button onClick={() => handleNominate(movie)}>
-              {getButtonLabel(movie)}
-            </Button>
+          {nominationsTab && (
+            <Button onClick={() => handleRemove(movie)}>Remove</Button>
           )}
-          <Button onClick={() => handleRemove(movie)}>Remove</Button>
           <Button onClick={() => showMoreInfo(movie, onOpen)}>More Info</Button>
-        </Td>
-      </Tr>
-    </Tbody>
+        </VStack>
+      </Td>
+    </Tr>
   );
 };
 
