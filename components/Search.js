@@ -7,18 +7,21 @@ const SearchBar = (props) => {
   const [value, setValue] = React.useState("");
   const handleChange = (event) => setValue(event.target.value);
 
-  const { setSearchResult} = props;
+  const { setSearchResult, setIsLoading } = props;
 
   const fetchMovieData = () => {
     axios
-      .get(`http://www.omdbapi.com/?s=${value}&type=movie&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`)
+      .get(
+        `http://www.omdbapi.com/?s=${value}&type=movie&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`
+      )
       .then((res) => {
         setSearchResult(res.data);
+        setIsLoading(false);
       });
   };
 
   React.useEffect(() => {
-      fetchMovieData()
+    fetchMovieData();
   }, [value]);
 
   return (
