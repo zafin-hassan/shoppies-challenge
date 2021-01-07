@@ -12,7 +12,7 @@ const SearchBar = (props) => {
   const fetchMovieData = () => {
     axios
       .get(
-        `http://www.omdbapi.com/?s=${value}&type=movie&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`
+        `https://www.omdbapi.com/?s=${value}&type=movie&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`
       )
       .then((res) => {
         setSearchResult(res.data);
