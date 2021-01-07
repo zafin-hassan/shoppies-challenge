@@ -1,8 +1,7 @@
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import MovieList from "../components/MovieList";
 import Search from "../components/Search";
-import { useState, useReducer } from "react";
+import { useState, useReducer, useEffect } from "react";
 import {
   Tabs,
   TabList,
@@ -15,6 +14,7 @@ import {
 import Nominations from "../components/Nominations";
 import { MovieContext } from "./../context/MovieContext";
 import { cardReducer, initialState } from "./../reducers/index";
+import Header from "../components/Header";
 
 export default function Home() {
   const [cardState, dispatch] = useReducer(cardReducer, initialState);
@@ -34,23 +34,25 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <div className="page-container" width="100%">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <VStack>
-        <Heading>Shoppies</Heading>
+      {/* <div> */}{" "}
+      <VStack width="100%">
+        <Header />
         <Search
           className="search-bar"
           setSearchResult={setSearchResult}
           setIsLoading={setIsLoading}
         />
-        <Tabs variant="soft-rounded" colorScheme="green">
-          <TabList>
-            <Tab>Search Results</Tab>
-            <Tab>Nominations</Tab>
+        <Tabs variant="unstyled">
+          <TabList className="tab-container">
+            <Tab _selected={{ color: "white", bg: "#004C3F" }}>
+              Search Results
+            </Tab>
+            <Tab _selected={{ color: "white", bg: "#004C3F" }}>Nominations</Tab>
           </TabList>
           {cardState.isNomineeLimitReached && (
             <div>Thanks for selecting 5 nominations!</div>
@@ -67,7 +69,7 @@ export default function Home() {
           </MovieContext.Provider>
         </Tabs>
       </VStack>
-
+      {/* </div> */}
       {/* <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"

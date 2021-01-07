@@ -1,3 +1,4 @@
+import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Spinner,
   Table,
@@ -73,7 +74,11 @@ const MovieCard = (props) => {
   };
 
   const getButtonLabel = (movie) => {
-    return isDuplicate(movie) ? "Nominated" : "Nominate";
+    return isDuplicate(movie) ? (
+      <CheckIcon w={3} h={3} />
+    ) : (
+      <AddIcon w={3} h={3} />
+    );
   };
   return (
     <Tr>
@@ -90,6 +95,23 @@ const MovieCard = (props) => {
         <VStack align="self-start">
           <Text>{movie?.Title}</Text>
           <Text fontSize="sm">{movie?.Year}</Text>
+          {/* {!nominationsTab && (
+            <div>
+              {isNomineeLimitReached || isDuplicate(movie) ? (
+                <Button isDisabled onClick={() => handleNominate(movie)}>
+                  {getButtonLabel(movie)}
+                </Button>
+              ) : (
+                <Button onClick={() => handleNominate(movie)}>
+                  {getButtonLabel(movie)}
+                </Button>
+              )}
+            </div>
+          )}
+          {nominationsTab && (
+            <Button onClick={() => handleRemove(movie)}>Remove</Button>
+          )}
+          <Button onClick={() => showMoreInfo(movie, onOpen)}>More Info</Button> */}
         </VStack>
       </Td>
       <Td>
@@ -117,9 +139,11 @@ const MovieCard = (props) => {
             </div>
           )}
           {nominationsTab && (
-            <Button onClick={() => handleRemove(movie)}>Remove</Button>
+            <Button onClick={() => handleRemove(movie)}>
+              <CloseIcon w={3} h={3} />
+            </Button>
           )}
-          <Button onClick={() => showMoreInfo(movie, onOpen)}>More Info</Button>
+          {/* <Button onClick={() => showMoreInfo(movie, onOpen)}>More Info</Button> */}
         </VStack>
       </Td>
     </Tr>

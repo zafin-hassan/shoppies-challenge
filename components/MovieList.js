@@ -21,7 +21,7 @@ const MovieList = (props) => {
   return (
     <div>
       {searchResult && !isLoading && (
-        <Table variant="simple" className="dataTable md:max-w-max">
+        <Table variant="simple" className="dataTable ">
           <Tbody>
             {searchResult?.Search?.map((movie, i) => (
               <MovieCard key={i} movie={movie} nominationsTab={false} />
