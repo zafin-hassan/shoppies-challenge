@@ -26,12 +26,7 @@ const MovieCard = (props) => {
     setModalDataLoading,
   } = props;
   const { cardState, dispatch } = useContext(MovieContext);
-  const {
-    nomineeCount,
-    nominatedMovies,
-    currentMovie,
-    isNomineeLimitReached,
-  } = cardState;
+  const { nominatedMovies, currentMovie, isNomineeLimitReached } = cardState;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const fetchMovieData = (movie) => {
     axios
@@ -55,11 +50,20 @@ const MovieCard = (props) => {
   const handleNominate = (movie) => {
     if (!isDuplicate(movie)) {
       dispatch({ type: "nominate", payload: movie });
+      const newNominatedMovies = [...cardState.nominatedMovies, movie];
+      localStorage.setItem(
+        "nominatedMovies",
+        JSON.stringify(newNominatedMovies)
+      );
     }
     console.log(movie);
   };
   const handleRemove = (movie) => {
     dispatch({ type: "remove", payload: movie });
+    const newList = cardState.nominatedMovies?.filter(
+      (item) => item.imdbID !== movie.imdbID
+    );
+    localStorage.setItem("nominatedMovies", JSON.stringify(newList));
   };
 
   const showMoreInfo = (props) => {

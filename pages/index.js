@@ -21,6 +21,18 @@ export default function Home() {
   const [searchResult, setSearchResult] = useState("");
   const [modalDataLoading, setModalDataLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const localNominees = localStorage.getItem("nominatedMovies");
+    const localNomineesParsed = JSON.parse(localNominees);
+    if (localNomineesParsed) {
+      localNomineesParsed.map((item) => {
+        dispatch({ type: "nominate", payload: item });
+        console.log(item);
+      });
+    }
+  }, []);
+
   return (
     <div>
       <Head>
