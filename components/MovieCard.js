@@ -1,18 +1,13 @@
 import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
-  Spinner,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
   TableCaption,
   Image,
   VStack,
   Text,
   Button,
   useDisclosure,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext } from "react";
@@ -81,8 +76,8 @@ const MovieCard = (props) => {
     );
   };
   return (
-    <Tr>
-      <Td>
+    <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+      <GridItem>
         {" "}
         <Image
           className=""
@@ -90,10 +85,10 @@ const MovieCard = (props) => {
           src={movie?.Poster}
           alt={movie?.Title}
         />
-      </Td>
-      <Td>
+      </GridItem>
+      <GridItem>
         <VStack align="self-start">
-          <Text>{movie?.Title}</Text>
+          <Text width={[100, 150, 200]}>{movie?.Title}</Text>
           <Text fontSize="sm">{movie?.Year}</Text>
           {/* {!nominationsTab && (
             <div>
@@ -113,8 +108,8 @@ const MovieCard = (props) => {
           )}
           <Button onClick={() => showMoreInfo(movie, onOpen)}>More Info</Button> */}
         </VStack>
-      </Td>
-      <Td>
+      </GridItem>
+      <GridItem>
         {/* {!modalDataLoading && (
             <ModalComponent
               onClose={onClose}
@@ -145,8 +140,8 @@ const MovieCard = (props) => {
           )}
           {/* <Button onClick={() => showMoreInfo(movie, onOpen)}>More Info</Button> */}
         </VStack>
-      </Td>
-    </Tr>
+      </GridItem>
+    </Grid>
   );
 };
 

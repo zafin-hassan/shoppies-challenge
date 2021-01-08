@@ -1,4 +1,4 @@
-import { Table, Tbody } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import MovieCard from "./MovieCard";
 import { useContext } from "react";
 import { MovieContext } from "./../context/MovieContext";
@@ -8,13 +8,11 @@ const Nominations = (props) => {
   const { nominatedMovies } = cardState;
   return (
     <div>
-      <Table variant="simple" className="dataTable">
-        <Tbody>
-          {nominatedMovies.map((movie, i) => (
-            <MovieCard key={i} movie={movie} nominationsTab={true} />
-          ))}
-        </Tbody>
-      </Table>
+      <VStack spacing={5}>
+        {nominatedMovies.map((movie, i) => (
+          <MovieCard key={i} movie={movie} nominationsTab={true} />
+        ))}
+      </VStack>
     </div>
   );
 };
