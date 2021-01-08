@@ -10,10 +10,13 @@
 ## Features
 
 - Search for movies on OMDB and view search results
+- Movies in search results can be added and removed from the nomination list
+- Displays a banner when the user has 5 nominations
+- Disables nominate button when user nomiantes a particular movie or nomination limit reached
 - View more info about a particular movie by clicking on `More Info` icon
-- Dark Mode feature for users who prefer that
+- Dark Mode feature 
 - Saves nominations list even if user leaves the page
-- All images are lazliy loaded, cached and served in modern WebP format. This is done thanks to [Next.js Image Component](https://nextjs.org/docs/api-reference/next/image)
+- All images are lazliy loaded, cached and served in modern WebP format. This is done using [Next.js Image Component](https://nextjs.org/docs/api-reference/next/image)
 - Fully responsive for mobile and tablet
 
 
