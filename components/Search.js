@@ -25,7 +25,7 @@ const SearchBar = (props) => {
   }, [value]);
 
   return (
-    <InputGroup className="search-container">
+    <InputGroup width="300px" className="search-container">
       <InputLeftElement
         pointerEvents="none"
         children={<SearchIcon color="gray.300" />}
