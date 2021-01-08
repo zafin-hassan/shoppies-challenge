@@ -9,7 +9,6 @@ const fetchMovieData = (movie) => {
       setCurrentMovie(res.data);
       setModalDataLoading(false);
       onOpen();
-      console.log(currentMovie);
     });
 };
 

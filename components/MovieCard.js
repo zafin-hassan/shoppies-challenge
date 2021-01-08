@@ -50,7 +50,6 @@ const MovieCard = (props) => {
         JSON.stringify(newNominatedMovies)
       );
     }
-    console.log(movie);
   };
   const handleRemove = (movie) => {
     dispatch({ type: "remove", payload: movie });
@@ -62,7 +61,6 @@ const MovieCard = (props) => {
 
   const showMoreInfo = (props) => {
     fetchMovieData(movie);
-    console.log(movie);
     onOpen();
   };
 

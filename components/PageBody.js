@@ -36,7 +36,6 @@ const PageBody = () => {
     if (localNomineesParsed) {
       localNomineesParsed.map((item) => {
         dispatch({ type: "nominate", payload: item });
-        console.log(item);
       });
     }
   }, []);
@@ -64,6 +63,7 @@ const PageBody = () => {
             justifyContent="center"
             textAlign="center"
             height="200px"
+            marginBottom="1.5rem"
           >
             <AlertIcon boxSize="40px" mr={0} />
             <AlertTitle mt={4} mb={1} fontSize="lg">
