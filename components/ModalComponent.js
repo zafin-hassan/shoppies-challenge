@@ -69,8 +69,6 @@ const ModalComponent = (props) => {
                 {currentMovie.BoxOffice}
               </Text>
             </VStack>
-
-            {/* <Image src={currentMovie.Poster} /> */}
           </ModalBody>
           <ModalFooter>
             <Button

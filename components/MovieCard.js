@@ -1,7 +1,6 @@
 import { AddIcon, CheckIcon, DeleteIcon, InfoIcon } from "@chakra-ui/icons";
 import {
   TableCaption,
-  Image,
   VStack,
   Text,
   Button,
@@ -9,6 +8,7 @@ import {
   Grid,
   GridItem,
 } from "@chakra-ui/react";
+import Image from "next/image";
 import axios from "axios";
 import { useContext } from "react";
 import ModalComponent from "./ModalComponent";
@@ -79,12 +79,21 @@ const MovieCard = (props) => {
     <Grid templateColumns="repeat(3, 1fr)" gap={6}>
       <GridItem>
         {" "}
-        <Image
-          className=""
-          maxW="120px"
-          src={movie?.Poster}
-          alt={movie?.Title}
-        />
+        {movie.Poster !== "N/A" ? (
+          <Image
+            width="120px"
+            height="180px"
+            layout="fixed"
+            loading="lazy"
+            src={movie?.Poster}
+            alt={movie?.Title}
+            // priority
+          />
+        ) : (
+          <Text width="120px" height="180px">
+            {"Image Unavailable 😔"}
+          </Text>
+        )}
       </GridItem>
       <GridItem>
         <VStack align="self-start">
