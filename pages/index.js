@@ -9,11 +9,14 @@ import {
   Tab,
   TabPanel,
   Heading,
+  Text,
   VStack,
   Alert,
   AlertIcon,
   AlertTitle,
+  Grid,
   AlertDescription,
+  GridItem,
 } from "@chakra-ui/react";
 
 import Nominations from "../components/Nominations";
@@ -26,6 +29,7 @@ export default function Home() {
   const [searchResult, setSearchResult] = useState("");
   const [modalDataLoading, setModalDataLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const { nomineeCount } = cardState;
 
   useEffect(() => {
     const localNominees = localStorage.getItem("nominatedMovies");
@@ -44,7 +48,6 @@ export default function Home() {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <div> */}{" "}
       <VStack width="100%">
         <Header />
         <Search
@@ -52,7 +55,7 @@ export default function Home() {
           setSearchResult={setSearchResult}
           setIsLoading={setIsLoading}
         />
-        <Tabs variant="unstyled">
+        <Tabs isFitted width={[300, 600, 600]} variant="unstyled">
           <TabList className="tab-container">
             <Tab _selected={{ color: "white", bg: "#004C3F" }}>
               Search Results
@@ -81,9 +84,19 @@ export default function Home() {
           <MovieContext.Provider value={{ dispatch, cardState }}>
             <TabPanels>
               <TabPanel>
+                {!searchResult.Search && (
+                  <Text textAlign="center">
+                    Please Search for a movie to see Search Results
+                  </Text>
+                )}
                 <MovieList searchResult={searchResult} />
               </TabPanel>
               <TabPanel>
+                {!nomineeCount && (
+                  <Text textAlign="center">
+                    You have not nominated any movies yet
+                  </Text>
+                )}
                 <Nominations />
               </TabPanel>
             </TabPanels>
