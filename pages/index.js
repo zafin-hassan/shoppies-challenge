@@ -10,7 +10,12 @@ import {
   TabPanel,
   Heading,
   VStack,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
+
 import Nominations from "../components/Nominations";
 import { MovieContext } from "./../context/MovieContext";
 import { cardReducer, initialState } from "./../reducers/index";
@@ -55,7 +60,23 @@ export default function Home() {
             <Tab _selected={{ color: "white", bg: "#004C3F" }}>Nominations</Tab>
           </TabList>
           {cardState.isNomineeLimitReached && (
-            <div>Thanks for selecting 5 nominations!</div>
+            <Alert
+              status="success"
+              variant="subtle"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
+              height="200px"
+            >
+              <AlertIcon boxSize="40px" mr={0} />
+              <AlertTitle mt={4} mb={1} fontSize="lg">
+                Movies selected!
+              </AlertTitle>
+              <AlertDescription maxWidth="sm">
+                Thank you for selecting 5 nominees!
+              </AlertDescription>
+            </Alert>
           )}
           <MovieContext.Provider value={{ dispatch, cardState }}>
             <TabPanels>
