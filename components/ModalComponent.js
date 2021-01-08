@@ -9,6 +9,9 @@ import {
   Button,
   Spinner,
   Image,
+  VStack,
+  Heading,
+  Text,
 } from "@chakra-ui/react";
 
 const ModalComponent = (props) => {
@@ -20,29 +23,59 @@ const ModalComponent = (props) => {
     handleNominate,
   } = props;
   return (
-    <Modal isOpen={isOpen} onClose={onClose} className="modal-styles">
-      {/* <ModalOverlay /> */}
+    <Modal isCentered isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
       {modalDataLoading ? (
         <Spinner />
       ) : (
         <ModalContent>
+          <ModalHeader>
+            {currentMovie.Title}
+            {", "}
+            {currentMovie.Year}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <h2>
-              {currentMovie.Title}
-              {currentMovie.Actors}
-              {}
-            </h2>
-            <div>{currentMovie.Plot}</div>
-            <Image src={currentMovie.Poster} />
+            <VStack spacing={4} align="left">
+              <Text>
+                <Text fontWeight="bold">{"Actors:"}</Text>
+                {currentMovie.Actors}
+              </Text>
+              <Text>
+                <Text fontWeight="bold">{"Plot:"}</Text>
+                {currentMovie.Plot}
+              </Text>
+              <Text align="left">
+                <Text fontWeight="bold">{"Awards: "}</Text>
+                {currentMovie.Awards}
+              </Text>
+              <Text align="left">
+                <Text fontWeight="bold">{"Ratings: "}</Text>
+                {currentMovie.Ratings[1] ? (
+                  <Text>
+                    {`${currentMovie.Ratings[1].Source}: `}
+                    {currentMovie.Ratings[1].Value}
+                  </Text>
+                ) : (
+                  <></>
+                )}
+                <Text>
+                  {"imdb: "}
+                  {currentMovie.imdbRating}
+                </Text>
+              </Text>
+              <Text>
+                <Text fontWeight="bold">{"Box Office: "}</Text>
+                {currentMovie.BoxOffice}
+              </Text>
+            </VStack>
+
+            {/* <Image src={currentMovie.Poster} /> */}
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            {/* <Button variant="ghost" onClick={handleNominate(currentMovie)}>
-              Nominate
-            </Button> */}
           </ModalFooter>
         </ModalContent>
       )}

@@ -18,6 +18,18 @@ export function cardReducer(cardState, action) {
         nomineeCount: cardState.nomineeCount - 1,
         isNomineeLimitReached: cardState.nomineeCount - 1 >= 5,
       };
+    case "info":
+      return {
+        ...cardState,
+        currentMovie: action.payload,
+        isModalDataLoading: false,
+      };
+    case "closeInfo":
+      return {
+        ...cardState,
+        currentMovie: "",
+        isModalDataLoading: true,
+      };
     case "reset":
       return init(action.payload);
     default:
@@ -30,4 +42,5 @@ export const initialState = {
   nominatedMovies: [],
   currentMovie: [],
   isNomineeLimitReached: false,
+  isModalDataLoading: true,
 };

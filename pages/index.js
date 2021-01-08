@@ -57,10 +57,12 @@ export default function Home() {
         />
         <Tabs isFitted width={[300, 600, 600]} variant="unstyled">
           <TabList className="tab-container">
-            <Tab _selected={{ color: "white", bg: "#004C3F" }}>
+            <Tab _selected={{ color: "white", bg: "green.800" }}>
               Search Results
             </Tab>
-            <Tab _selected={{ color: "white", bg: "#004C3F" }}>Nominations</Tab>
+            <Tab _selected={{ color: "white", bg: "green.800" }}>
+              Nominations
+            </Tab>
           </TabList>
           {cardState.isNomineeLimitReached && (
             <Alert
@@ -103,17 +105,6 @@ export default function Home() {
           </MovieContext.Provider>
         </Tabs>
       </VStack>
-      {/* </div> */}
-      {/* <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer> */}
     </div>
   );
 }

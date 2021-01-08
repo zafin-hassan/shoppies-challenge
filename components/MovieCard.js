@@ -1,4 +1,4 @@
-import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { AddIcon, CheckIcon, DeleteIcon, InfoIcon } from "@chakra-ui/icons";
 import {
   TableCaption,
   Image,
@@ -11,29 +11,27 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext } from "react";
-// import ModalComponent from "./ModalComponent";
+import ModalComponent from "./ModalComponent";
 import { MovieContext } from "./../context/MovieContext";
 
 const MovieCard = (props) => {
-  const {
-    movie,
-    modalDataLoading,
-    nominationsTab: nominationsTab,
-    setModalDataLoading,
-  } = props;
+  const { movie, modalDataLoading, nominationsTab: nominationsTab } = props;
   const { cardState, dispatch } = useContext(MovieContext);
-  const { nominatedMovies, currentMovie, isNomineeLimitReached } = cardState;
+  const {
+    nominatedMovies,
+    currentMovie,
+    isNomineeLimitReached,
+    isModalDataLoading,
+  } = cardState;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const fetchMovieData = (movie) => {
     axios
       .get(
-        `https://www.omdbapi.com/?i=${movie.imdbID}&plot=full&type=movie&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`
+        `https://www.omdbapi.com/?i=${movie.imdbID}&type=movie&apikey=${process.env.NEXT_PUBLIC_OMDB_API_KEY}`
       )
       .then((res) => {
-        setCurrentMovie(res.data);
-        setModalDataLoading(false);
+        dispatch({ type: "info", payload: res.data });
         onOpen();
-        console.log(currentMovie);
       });
   };
 
@@ -75,6 +73,10 @@ const MovieCard = (props) => {
       <AddIcon w={3} h={3} />
     );
   };
+  const handleModalClose = () => {
+    dispatch({ type: "closeInfo", payload: movie });
+    onClose();
+  };
   return (
     <Grid templateColumns="repeat(3, 1fr)" gap={6}>
       <GridItem>
@@ -90,35 +92,18 @@ const MovieCard = (props) => {
         <VStack align="self-start">
           <Text width={[100, 150, 200]}>{movie?.Title}</Text>
           <Text fontSize="sm">{movie?.Year}</Text>
-          {/* {!nominationsTab && (
-            <div>
-              {isNomineeLimitReached || isDuplicate(movie) ? (
-                <Button isDisabled onClick={() => handleNominate(movie)}>
-                  {getButtonLabel(movie)}
-                </Button>
-              ) : (
-                <Button onClick={() => handleNominate(movie)}>
-                  {getButtonLabel(movie)}
-                </Button>
-              )}
-            </div>
-          )}
-          {nominationsTab && (
-            <Button onClick={() => handleRemove(movie)}>Remove</Button>
-          )}
-          <Button onClick={() => showMoreInfo(movie, onOpen)}>More Info</Button> */}
         </VStack>
       </GridItem>
       <GridItem>
-        {/* {!modalDataLoading && (
-            <ModalComponent
-              onClose={onClose}
-              isOpen={isOpen}
-              currentMovie={currentMovie}
-              modalDataLoading={modalDataLoading}
-              handleNominate={handleNominate}
-            />
-          )} */}
+        {!isModalDataLoading && (
+          <ModalComponent
+            onClose={handleModalClose}
+            isOpen={isOpen}
+            currentMovie={currentMovie}
+            modalDataLoading={isModalDataLoading}
+            handleNominate={handleNominate}
+          />
+        )}
         <VStack>
           {!nominationsTab && (
             <div>
@@ -135,10 +120,12 @@ const MovieCard = (props) => {
           )}
           {nominationsTab && (
             <Button onClick={() => handleRemove(movie)}>
-              <CloseIcon w={3} h={3} />
+              <DeleteIcon w={3} h={3} />
             </Button>
           )}
-          {/* <Button onClick={() => showMoreInfo(movie, onOpen)}>More Info</Button> */}
+          <Button onClick={() => showMoreInfo(movie, onOpen)}>
+            <InfoIcon w={3} h={3} />
+          </Button>
         </VStack>
       </GridItem>
     </Grid>
