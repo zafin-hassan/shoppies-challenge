@@ -16,6 +16,8 @@ import {
   Grid,
   AlertDescription,
   GridItem,
+  Box,
+  CloseButton,
 } from "@chakra-ui/react";
 
 import Nominations from "./Nominations";
@@ -49,10 +51,10 @@ const PageBody = () => {
       />
       <Tabs isFitted width={[300, 600, 600]} variant="unstyled">
         <TabList className="tab-container">
-          <Tab _selected={{ color: "white", bg: "green.800" }}>
+          <Tab _selected={{ color: "white", bg: "green.500" }}>
             Search Results
           </Tab>
-          <Tab _selected={{ color: "white", bg: "green.800" }}>Nominations</Tab>
+          <Tab _selected={{ color: "white", bg: "green.500" }}>Nominations</Tab>
         </TabList>
         {cardState.isNomineeLimitReached && (
           <Alert

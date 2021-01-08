@@ -106,18 +106,26 @@ const MovieCard = (props) => {
           {!nominationsTab && (
             <div>
               {isNomineeLimitReached || isDuplicate(movie) ? (
-                <Button isDisabled onClick={() => handleNominate(movie)}>
+                <Button isDisabled bg="green.500" _hover={{ bg: "green.500" }}>
                   {getButtonLabel(movie)}
                 </Button>
               ) : (
-                <Button onClick={() => handleNominate(movie)}>
+                <Button
+                  bg="green.500"
+                  _hover={{ bg: "green.500" }}
+                  onClick={() => handleNominate(movie)}
+                >
                   {getButtonLabel(movie)}
                 </Button>
               )}
             </div>
           )}
           {nominationsTab && (
-            <Button onClick={() => handleRemove(movie)}>
+            <Button
+              bg="red.500"
+              _hover={{ bg: "red.500" }}
+              onClick={() => handleRemove(movie)}
+            >
               <DeleteIcon w={3} h={3} />
             </Button>
           )}
