@@ -29,8 +29,6 @@
 - Deployed using vercel
 
 ## Demo
-
-The Shoppies
 <a href="https://www.loom.com/share/25f7abebe98342a9be353c769f76d9af"><img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/25f7abebe98342a9be353c769f76d9af-with-play.gif"> </a>
 
 ##  Development
